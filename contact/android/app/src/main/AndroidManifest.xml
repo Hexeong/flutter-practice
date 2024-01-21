@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <application
-        android:label="contact"
+        android:label="com.WrathHEX.contact"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
