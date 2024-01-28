@@ -20,7 +20,7 @@ class Homework1 extends StatelessWidget {
             children: [
               Icon(Icons.phone),
               Icon(Icons.message),
-              Icon(Icons.contact_page)
+              Icon(Icons.contact_page),
             ],
           )), // 하단 part
       )

@@ -18,7 +18,7 @@ class Homework2 extends StatelessWidget {
           body: Column(crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-                Image.asset('dog.jpg', width: 100, height: 100,),
+                Image.asset('assets/dog.jpg', width: 100, height: 100,),
                 Expanded(child: Container(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text("도지 코인 1000개"),
                   Text("전북 남원"),
@@ -37,7 +37,7 @@ class Homework2 extends StatelessWidget {
                 padding: EdgeInsets.all(5),),
 
               Container(child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-                Image.asset('carrot.png', width: 100, height: 100,),
+                Image.asset('assets/carrot.png', width: 100, height: 100,),
                 Expanded(child: Container(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text("신선한 당근 100개"),
                   Text("전북 남원"),
