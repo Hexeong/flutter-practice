@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:mindcare/func/star.dart';
 import 'dart:ui';
+import 'package:mindcare/Page/Analyze.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -59,10 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
             left: 10,
             top: 100,
             right: 0,
-            child: ConstellationPainter(
-              createConstellation1,
-              Colors.white,
-            ),
+            child: StarPainterWidget(createConstellation1, Colors.white)
           ),
           Scaffold(
             backgroundColor: Colors.transparent,
@@ -80,24 +78,29 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             IconButton(
               key: keyBottomAnalytics,
-              onPressed: () {},
-              icon: Icon(Icons.analytics_outlined, size: 40, color: Colors.white),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyzePage()));
+              },
+              icon: Icon(Icons.analytics_outlined, size: 60, color: Colors.white),
             ),
             IconButton(
               key: keyBottomAddDailyNote,
               onPressed: () {},
-              icon: Icon(Icons.add_circle_outline, size: 100, color: Colors.white),
+              icon: Icon(Icons.add_circle_outline, size: 90, color: Colors.white),
             ),
             IconButton(
               key: keyBottomInfo,
               onPressed: () {},
-              icon: Icon(Icons.person, size: 40, color: Colors.white),
+              icon: Icon(Icons.person, size: 60, color: Colors.white),
             ),
           ],
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         ),
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(28, 33, 43, 1)
+        ),
       ),
-      backgroundColor: Color.fromRGBO(28, 33, 43, 0),
+      
     );
   }
 
@@ -145,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text(
                     "여기는 그동안의 내 감정과 (캐릭터 이름)의 편지를 다시 볼 수 있어!",
-                    style: TextStyle(color: Colors.amber, fontSize: 20),
+                    style: TextStyle(color: Colors.white, fontSize: 25),
                   )
                 ],
               );
@@ -172,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text(
                     "여기에 감정을 기록해줘!",
-                    style: TextStyle(color: Colors.amber, fontSize: 30),
+                    style: TextStyle(color: Colors.white, fontSize: 25),
                   )
                 ],
               );
@@ -199,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text(
                     "개인정보 수정 및 소중한 피드백은 여기에!",
-                    style: TextStyle(color: Colors.amber, fontSize: 20),
+                    style: TextStyle(color: Colors.white, fontSize: 25),
                   )
                 ],
               );

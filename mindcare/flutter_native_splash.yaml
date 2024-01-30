@@ -42,8 +42,11 @@ flutter_native_splash:
   # Android 12 handles the splash screen differently than previous versions.  Please visit
   # https://developer.android.com/guide/topics/ui/splash-screen
   # Following are Android 12 specific parameter.
-  background_image: assets/image/splash/splash.png
+  background_image: assets/image/splash/splash.jpg
   image: assets/image/splash/cattt.jpg
+
+  android_12:
+    image: assets/image/splash/splash.jpg
     # The image parameter sets the splash screen icon image.  If this parameter is not specified,
     # the app's launcher icon will be used instead.
     # Please note that the splash screen will be clipped to a circle on the center of the screen.
