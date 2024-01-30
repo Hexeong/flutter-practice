@@ -12,7 +12,7 @@ class Cause extends StatelessWidget {
     var size = MediaQuery.of(context).size;
 
     /*24 is for notification bar on Android*/
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 7;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 10;
     final double itemWidth = size.width / 2;
 
     var type = TextEditingController();
@@ -32,10 +32,11 @@ class Cause extends StatelessWidget {
         ),
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: Text("느낀 감정에 영향을 준 키워드가 있어?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                child: Text("느낀 감정에 영향을 준 키워드가 있어?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -45,8 +46,10 @@ class Cause extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                   color: Colors.white
                 ),
-                width: size.width / 100 * 90,
-                height: size.height / 100 * 50,
+                margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                padding: EdgeInsets.all(10),
+                width: size.width / 100 * 65,
+                height: size.height / 100 * 28,
                 child: Column(
                   children: [
                     Expanded(
@@ -54,8 +57,8 @@ class Cause extends StatelessWidget {
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3, //1 개의 행에 보여줄 item 개수
                             childAspectRatio: itemWidth / itemHeight, //item 의 가로 1, 세로 2 의 비율
-                            mainAxisSpacing: 10, //수평 Padding
-                            crossAxisSpacing: 10, //수직 Padding
+                            mainAxisSpacing: 5, //수평 Padding
+                            crossAxisSpacing: 5, //수직 Padding
                           ),
                           itemBuilder: (c, i) => TextButton(
                               onPressed: () {
@@ -68,7 +71,6 @@ class Cause extends StatelessWidget {
                         )
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                       child: TextButton(
                           onPressed: () {
                             showDialog(
@@ -99,7 +101,10 @@ class Cause extends StatelessWidget {
                                 }
                             );
                           },
-                          child: Text("직접작성")
+                          child: Padding(
+                            child: Text("직접작성"),
+                            padding: EdgeInsets.fromLTRB(itemWidth / 2, 20, itemWidth / 2, 20),
+                          )
                       ),
                     )
                   ],

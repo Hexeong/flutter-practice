@@ -11,7 +11,7 @@ class Today extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    var type = TextEditingController(text: "초기값");
+    var type = TextEditingController();
 
     return GestureDetector(
       onTap: () {
@@ -27,10 +27,11 @@ class Today extends StatelessWidget {
           appBar: AppBar(backgroundColor: Colors.transparent,),
           body: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                  child: Text("오늘 어떤 하루를 보냈는지 작성해줘!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                  child: Text("오늘 어떤 하루를 보냈는지 작성해줘!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -40,8 +41,8 @@ class Today extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                       color: Colors.white
                   ),
-                  width: size.width / 100 * 90,
-                  height: size.height / 100 * 50,
+                  width: size.width / 100 * 65,
+                  height: size.height / 100 * 25,
                   margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                   padding: EdgeInsets.all(5),
                   child: TextFormField(
@@ -50,15 +51,18 @@ class Today extends StatelessWidget {
                     keyboardType: TextInputType.multiline,
                   ),
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      context.read<TodayStore>().setTyping(type.text);
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        context.read<TodayStore>().setTyping(type.text);
 
-                      // GPTs Logic
+                        // GPTs Logic
 
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Result()));
-                    },
-                    child: Text("확인")
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Result()));
+                      },
+                      child: Text("확인")
+                  ),
                 )
               ],
             ),

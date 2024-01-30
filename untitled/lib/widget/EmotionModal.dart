@@ -30,6 +30,17 @@ class EmotionModal extends StatelessWidget {
 
     return CustomScrollView(
       slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(10, 10, 10, 16),
+            child: Container(
+              alignment: Alignment.center,
+              child: Text("지금 느끼는 감정을 자세히 말해줄래?", style: TextStyle(
+                fontSize: 30,
+              )),
+            ),
+          ),
+        ),
         SliverGrid(
           delegate: SliverChildBuilderDelegate(
               (c, i) => TextButton(
