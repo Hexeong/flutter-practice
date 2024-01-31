@@ -3,6 +3,9 @@ import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:mindcare/func/star.dart';
 import 'dart:ui';
 import 'package:mindcare/Page/Analyze.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+import 'package:mindcare/func/ourVoice.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -13,6 +16,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late TutorialCoachMark tutorialCoachMark;
+  late SharedPreferences storage;
+  bool isCompleteTuto = false;
+  String userName = '';
+  String userJob = '';
+  bool wantVoice = true;
 
   GlobalKey keyBottomAnalytics = GlobalKey();
   GlobalKey keyBottomAddDailyNote = GlobalKey();
@@ -20,9 +28,22 @@ class _MyHomePageState extends State<MyHomePage> {
   GlobalKey keyTopConstellation = GlobalKey();
 
   void initState() {
-    createTutorial();
-    Future.delayed(Duration.zero, showTutorial);
     super.initState();
+    // 스플래시 화면 넣기
+    init();
+  }
+
+  void init() async {
+    await initStorage();
+    await loadSavedData();
+    if (isCompleteTuto == false) {
+      createTutorial();
+      Future.delayed(Duration.zero, showTutorial);
+    } else {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        showOurVoice(context, storage, wantVoice);
+      });
+    }
   }
 
   List<Offset> createConstellation1 = [
@@ -39,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
     const Offset(89, 100),
     const Offset(0, 0),
     const Offset(400, 400),
-    
   ];
 
   @override
@@ -56,12 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Positioned(
-            key: keyTopConstellation,
-            left: 10,
-            top: 100,
-            right: 0,
-            child: StarPainterWidget(createConstellation1, Colors.white)
-          ),
+              key: keyTopConstellation,
+              left: 10,
+              top: 100,
+              right: 0,
+              child: StarPainterWidget(createConstellation1, Colors.white)),
           Scaffold(
             backgroundColor: Colors.transparent,
             body: Center(
@@ -79,28 +98,31 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               key: keyBottomAnalytics,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyzePage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AnalyzePage()));
               },
-              icon: Icon(Icons.analytics_outlined, size: 60, color: Colors.white),
+              icon:
+                  Icon(Icons.analytics_outlined, size: 60, color: Colors.white),
             ),
             IconButton(
               key: keyBottomAddDailyNote,
               onPressed: () {},
-              icon: Icon(Icons.add_circle_outline, size: 90, color: Colors.white),
+              icon:
+                  Icon(Icons.add_circle_outline, size: 90, color: Colors.white),
             ),
             IconButton(
               key: keyBottomInfo,
-              onPressed: () {},
+              onPressed: () {
+                loadSavedData();
+                showOurVoice(context, storage, wantVoice);
+              },
               icon: Icon(Icons.person, size: 60, color: Colors.white),
             ),
           ],
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         ),
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(28, 33, 43, 1)
-        ),
+        decoration: BoxDecoration(color: Color.fromRGBO(28, 33, 43, 1)),
       ),
-      
     );
   }
 
@@ -118,12 +140,20 @@ class _MyHomePageState extends State<MyHomePage> {
       imageFilter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
       onFinish: () {
         print("튜토리얼 끝");
+        isCompleteTuto = true;
+        storage.setBool('isCompleteTuto', isCompleteTuto);
+        print('saved complete');
+        showOurVoice(context, storage, wantVoice);
       },
       onClickTarget: (target) {
         print('onClickTarget: $target');
       },
       onSkip: () {
         print('스킵');
+        isCompleteTuto = true;
+        storage.setBool('isCompleteTuto', isCompleteTuto);
+        print('saved complete');
+        showOurVoice(context, storage, wantVoice);
         return true;
       },
     );
@@ -144,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context, controller) {
               return const Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     "여기는 그동안의 내 감정과 (캐릭터 이름)의 편지를 다시 볼 수 있어!",
@@ -171,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context, controller) {
               return const Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     "여기에 감정을 기록해줘!",
@@ -198,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
             builder: (context, controller) {
               return const Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     "개인정보 수정 및 소중한 피드백은 여기에!",
@@ -212,5 +242,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
     return targets;
+  }
+
+  initStorage() async {
+    storage = await SharedPreferences.getInstance();
+    print('initStorage complete');
+  }
+
+  loadSavedData() async {
+    isCompleteTuto = await storage.getBool('isCompleteTuto') ?? false;
+    userName = await storage.getString('userName') ?? 'Null';
+    userJob = await storage.getString('userJob') ?? 'Null';
+    wantVoice = await storage.getBool('wantVoice') ?? true;
+    print('loadSavedData complete');
   }
 }
