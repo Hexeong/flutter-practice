@@ -62,10 +62,9 @@ class _AnalyzePageState extends State<AnalyzePage> {
       controller: _scrollController,
       slivers: <Widget>[
         SliverAppBar(
-          
           pinned: true,
           expandedHeight: 100,
-          backgroundColor: Colors.orangeAccent,
+          backgroundColor: Color(0xffffd1dc),
           flexibleSpace: Container(
             child: FlexibleSpaceBar(
               title: Align(
@@ -74,8 +73,8 @@ class _AnalyzePageState extends State<AnalyzePage> {
                   '나의 감정분석 차트', 
                   style: TextStyle(
                     fontSize: 25, 
-                    fontWeight: 
-                    FontWeight.w500,
+                    fontFamily: 'SoyoMaple',
+                    fontWeight: FontWeight.w700,
                     color: Colors.black
                       ),
                     ),
@@ -85,14 +84,13 @@ class _AnalyzePageState extends State<AnalyzePage> {
                 start: 16,
                 bottom: 25,
               ),
-
             ),
           ),
           bottom: PreferredSize(
             child: Opacity(
               opacity: scrollOpacity,
               child: Container(
-                color: Colors.blue,
+                color: Colors.white,
                 height: 16,
               ),
             ),
@@ -101,6 +99,7 @@ class _AnalyzePageState extends State<AnalyzePage> {
         ),
         SliverToBoxAdapter(
           child: Container(
+            color: Colors.white,
             padding: EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,7 +108,8 @@ class _AnalyzePageState extends State<AnalyzePage> {
                   '감정 분석 차트',
                   style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                    fontFamily: 'SoyoMaple',
+                    fontWeight: FontWeight.w700,
                     color: Colors.black
                   ),
                 ),
@@ -120,9 +120,11 @@ class _AnalyzePageState extends State<AnalyzePage> {
                   '(사용자 이름)은 (최다 감정)을 제일 많이 느끼는구나....!',
                   style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                    fontFamily: 'SoyoMaple',
+                    fontWeight: FontWeight.w400,
                     color: Colors.black
                   ),
+                  textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 10,),
                   TextButton(onPressed: (){

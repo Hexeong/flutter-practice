@@ -1,11 +1,12 @@
+import 'dart:ui';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
-import 'package:mindcare/func/star.dart';
-import 'dart:ui';
-import 'package:mindcare/Page/Analyze.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+import 'package:mindcare/func/star.dart';
 import 'package:mindcare/func/ourVoice.dart';
+import 'package:mindcare/Page/Analyze.dart';
+import 'package:mindcare/Page/UserInput.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -21,6 +22,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String userName = '';
   String userJob = '';
   bool wantVoice = true;
+  String userBirth = '';
+  bool needInfoSet = true;
 
   GlobalKey keyBottomAnalytics = GlobalKey();
   GlobalKey keyBottomAddDailyNote = GlobalKey();
@@ -99,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
               key: keyBottomAnalytics,
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AnalyzePage()));
+                  MaterialPageRoute(builder: (context) => AnalyzePage()));
               },
               icon:
                   Icon(Icons.analytics_outlined, size: 60, color: Colors.white),
@@ -113,8 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               key: keyBottomInfo,
               onPressed: () {
-                loadSavedData();
-                showOurVoice(context, storage, wantVoice);
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserInput()));
               },
               icon: Icon(Icons.person, size: 60, color: Colors.white),
             ),
@@ -178,7 +181,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text(
                     "여기는 그동안의 내 감정과 (캐릭터 이름)의 편지를 다시 볼 수 있어!",
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontSize: 25,
+                      fontFamily: 'SoyoMaple',
+                      fontWeight: FontWeight.w400
+                      ),
+                    textAlign: TextAlign.center,
                   )
                 ],
               );
@@ -205,7 +214,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text(
                     "여기에 감정을 기록해줘!",
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontSize: 25,
+                      fontFamily: 'SoyoMaple',
+                      fontWeight: FontWeight.w400
+                      ),
                   )
                 ],
               );
@@ -232,7 +246,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Text(
                     "개인정보 수정 및 소중한 피드백은 여기에!",
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    style: TextStyle(
+                      color: Colors.white, 
+                      fontSize: 25, 
+                      fontFamily: 'SoyoMaple',
+                      fontWeight: FontWeight.w400
+                    ),
                   )
                 ],
               );

@@ -51,8 +51,8 @@ class _DrawGraphState extends State<DrawGraph> {
   List<PieChartSectionData> showingSections() {
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 25 : 16;
-      final double radius = isTouched ? 60 : 50;
+      final double fontSize = isTouched ? 40 : 25;
+      final double radius = isTouched ? 150 : 150;
 
       switch (i) {
         case 0:
@@ -61,7 +61,11 @@ class _DrawGraphState extends State<DrawGraph> {
             value: emotions['happy'].toDouble(),
             title: 'happy',
             radius: radius,
-            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+            titleStyle: TextStyle(
+              fontSize: fontSize,
+              fontFamily: 'SoyoMaple',
+              fontWeight: FontWeight.w400, 
+              color: const Color(0xffffffff)),
           );
         case 1:
           return PieChartSectionData(
@@ -69,7 +73,11 @@ class _DrawGraphState extends State<DrawGraph> {
             value: emotions['anger'].toDouble(),
             title: 'anger',
             radius: radius,
-            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+            titleStyle: TextStyle(
+              fontSize: fontSize, 
+              fontFamily: 'SoyoMaple',
+              fontWeight: FontWeight.w400, 
+              color: const Color(0xffffffff)),
           );
         case 2:
           return PieChartSectionData(
@@ -77,7 +85,11 @@ class _DrawGraphState extends State<DrawGraph> {
             value: emotions['annoy'].toDouble(),
             title: 'annoyed',
             radius: radius,
-            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+            titleStyle: TextStyle(
+              fontSize: fontSize, 
+              fontFamily: 'SoyoMaple',
+              fontWeight: FontWeight.w400, 
+              color: const Color(0xffffffff)),
           );
         case 3:
           return PieChartSectionData(
@@ -85,7 +97,11 @@ class _DrawGraphState extends State<DrawGraph> {
             value: emotions['sad'].toDouble(),
             title: 'sad',
             radius: radius,
-            titleStyle: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold, color: const Color(0xffffffff)),
+            titleStyle: TextStyle(
+              fontSize: fontSize, 
+              fontFamily: 'SoyoMaple',
+              fontWeight: FontWeight.w400, 
+              color: const Color(0xffffffff)),
           );
         default:
           throw ('Unknown emotion');
