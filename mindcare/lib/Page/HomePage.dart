@@ -6,9 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mindcare/func/star.dart';
 import 'package:mindcare/func/ourVoice.dart';
 import 'package:mindcare/Page/Analyze.dart';
-import 'package:mindcare/Page/UserInput.dart';
+import 'package:mindcare/Page/UserInfo.dart';
 import 'package:mindcare/Style/SoyoMaple.dart';
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -51,8 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  List<Offset> createConstellation1 = [
-  ];
+  List<Offset> createConstellation1 = [];
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
               key: keyBottomAnalytics,
               onPressed: () {
                 Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AnalyzePage()));
+                    MaterialPageRoute(builder: (context) => AnalyzePage()));
               },
               icon:
                   Icon(Icons.analytics_outlined, size: 60, color: Colors.white),
@@ -106,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
               key: keyBottomInfo,
               onPressed: () {
                 Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UserInput()));
+                    MaterialPageRoute(builder: (context) => UserInfo()));
               },
               icon: Icon(Icons.person, size: 60, color: Colors.white),
             ),
@@ -171,11 +169,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text(
                     "여기는 그동안의 내 감정과 의 편지를 다시 볼 수 있어!",
                     style: TextStyle(
-                      color: Colors.white, 
-                      fontSize: 25,
-                      fontFamily: 'SoyoMaple',
-                      fontWeight: FontWeight.w400
-                      ),
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontFamily: 'SoyoMaple',
+                        fontWeight: FontWeight.w400),
                     textAlign: TextAlign.center,
                   )
                 ],
@@ -204,11 +201,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text(
                     "여기에 감정을 기록해줘!",
                     style: TextStyle(
-                      color: Colors.white, 
-                      fontSize: 25,
-                      fontFamily: 'SoyoMaple',
-                      fontWeight: FontWeight.w400
-                      ),
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontFamily: 'SoyoMaple',
+                        fontWeight: FontWeight.w400),
                   )
                 ],
               );
@@ -236,11 +232,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text(
                     "개인정보 수정 및 소중한 피드백은 여기에!",
                     style: TextStyle(
-                      color: Colors.white, 
-                      fontSize: 25, 
-                      fontFamily: 'SoyoMaple',
-                      fontWeight: FontWeight.w400
-                    ),
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontFamily: 'SoyoMaple',
+                        fontWeight: FontWeight.w400),
                   )
                 ],
               );
