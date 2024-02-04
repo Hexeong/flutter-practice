@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:mindcare/Style/SoyoMaple.dart';
 
-
-Map emotions = {'anger': 21, 'sad': 13, 'happy': 50, 'annoy': 16};
+Map emotions = {'속상한': 38, '답답한': 27, '미운': 14, '초조한': 21};
 
 class DrawGraph extends StatefulWidget {
   const DrawGraph({super.key});
@@ -42,7 +41,7 @@ class _DrawGraphState extends State<DrawGraph> {
               show: false,
             ),
             sectionsSpace: 0,
-            centerSpaceRadius: 40,
+            centerSpaceRadius: 0,
             sections: showingSections(),
           ),
         ),
@@ -54,56 +53,44 @@ class _DrawGraphState extends State<DrawGraph> {
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
       final double fontSize = isTouched ? 40 : 25;
-      final double radius = isTouched ? 150 : 150;
+      final double radius = isTouched ? 200 : 170;
 
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: Colors.amber,
-            value: emotions['happy'].toDouble(),
-            title: 'happy',
+            color: Color(0xffc1aae2),
+            value: emotions['속상한'].toDouble(),
+            title: '속상한 \n(${emotions['속상한'].toDouble()}%)',
             radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontFamily: 'SoyoMaple',
-              fontWeight: FontWeight.w400, 
-              color: const Color(0xffffffff)),
+            showTitle: true,
+            titleStyle: soyoMaple700_20_black,
           );
         case 1:
           return PieChartSectionData(
-            color: Colors.red.shade600,
-            value: emotions['anger'].toDouble(),
-            title: 'anger',
+            color: Color(0xff9eb4e3),
+            value: emotions['답답한'].toDouble(),
+            title: '답답한 \n(${emotions['답답한'].toDouble()}%)',
+            showTitle: true,
             radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize, 
-              fontFamily: 'SoyoMaple',
-              fontWeight: FontWeight.w400, 
-              color: const Color(0xffffffff)),
+            titleStyle: soyoMaple700_20_black,
           );
         case 2:
           return PieChartSectionData(
-            color: Colors.indigoAccent.shade100,
-            value: emotions['annoy'].toDouble(),
-            title: 'annoyed',
+            color: Color(0xfff6c1c1),
+            value: emotions['미운'].toDouble(),
+            title: '미운 \n(${emotions['미운'].toDouble()}%)',
             radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize, 
-              fontFamily: 'SoyoMaple',
-              fontWeight: FontWeight.w400, 
-              color: const Color(0xffffffff)),
+            showTitle: true,
+            titleStyle: soyoMaple700_20_black,
           );
         case 3:
           return PieChartSectionData(
-            color: Colors.purple.shade600,
-            value: emotions['sad'].toDouble(),
-            title: 'sad',
+            color: Color(0xffafe39e),
+            value: emotions['초조한'].toDouble(),
+            title: '초조한 \n(${emotions['초조한'].toDouble()}%)',
             radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize, 
-              fontFamily: 'SoyoMaple',
-              fontWeight: FontWeight.w400, 
-              color: const Color(0xffffffff)),
+            showTitle: true,
+            titleStyle: soyoMaple700_20_black,
           );
         default:
           throw ('Unknown emotion');

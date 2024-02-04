@@ -48,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
         showOurVoice(context, storage, wantVoice);
       });
     }
+    // info 입력
   }
 
   List<Offset> createConstellation1 = [];
@@ -88,8 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               key: keyBottomAnalytics,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AnalyzePage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AnalyzePage(
+                              userName: userName,
+                            )));
               },
               icon:
                   Icon(Icons.analytics_outlined, size: 60, color: Colors.white),

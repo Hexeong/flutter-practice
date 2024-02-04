@@ -63,7 +63,7 @@ class _UserInfoState extends State<UserInfo> {
                 ElevatedButton(
                   onPressed: () {
                     feedBackString = feedbackController.text;
-                    // firebase 연동하기
+                    // firebase 연동하기 + 이메일 보내기
                     Navigator.of(context).pop(); // 다이얼로그 닫기
                   },
                   child: Text(
