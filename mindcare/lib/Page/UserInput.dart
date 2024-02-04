@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:mindcare/func/birthdate_picker.dart';
+import 'package:mindcare/Style/SoyoMaple.dart';
+
 
 
 class UserInput extends StatefulWidget {
@@ -88,17 +90,13 @@ class _UserInputState extends State<UserInput> {
                       inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 \u3131-\u314e\u314f-\u3163\uac00-\ud7a3]+"))],
                       decoration: InputDecoration(
                         hintText: '별명을 여기 입력해주세요!',
-                        labelStyle: TextStyle(fontFamily: 'Soyo', fontWeight: FontWeight.w400),
+                        labelStyle: soyoMaple400_20,
                       ),
                     ),
                   ),
                   Text(
                     '(불리고픈 별명으로 적어주세요!)', 
-                    style: TextStyle(
-                      fontFamily: 'Soyo',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20
-                  ),
+                    style: soyoMaple400_20
                   ),
                 ],
               ),
@@ -112,12 +110,8 @@ class _UserInputState extends State<UserInput> {
                   Container(
                     child: Text(
                       '직업', 
-                      style: TextStyle(
-                        fontFamily: 'Soyo',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 25
-                        ),
-                        textAlign: TextAlign.left,
+                      style: soyoMaple700_25,
+                      textAlign: TextAlign.left,
                     ),
                   ),
                   Container(
@@ -170,12 +164,8 @@ class _UserInputState extends State<UserInput> {
                       children: [
                         Text(
                           '생년월일', 
-                          style: TextStyle(
-                            fontFamily: 'Soyo',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 25
-                            ),
-                            textAlign: TextAlign.left,
+                          style: soyoMaple700_25,
+                          textAlign: TextAlign.left,
                         ),
                         Center(
                           child: TextButton(

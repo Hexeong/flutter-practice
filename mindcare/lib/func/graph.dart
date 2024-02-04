@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:mindcare/Style/SoyoMaple.dart';
+
 
 Map emotions = {'anger': 21, 'sad': 13, 'happy': 50, 'annoy': 16};
 

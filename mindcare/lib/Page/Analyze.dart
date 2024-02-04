@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mindcare/func/graph.dart';
+import 'package:mindcare/Style/SoyoMaple.dart';
+
 
 class AnalyzePage extends StatefulWidget {
   const AnalyzePage({super.key});
@@ -57,511 +59,109 @@ class _AnalyzePageState extends State<AnalyzePage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      physics: BouncingScrollPhysics(),
-      controller: _scrollController,
-      slivers: <Widget>[
-        SliverAppBar(
-          pinned: true,
-          expandedHeight: 100,
-          backgroundColor: Color(0xffffd1dc),
-          flexibleSpace: Container(
-            child: FlexibleSpaceBar(
-              title: Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  '나의 감정분석 차트', 
-                  style: TextStyle(
-                    fontSize: 25, 
-                    fontFamily: 'SoyoMaple',
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black
+    return Stack(
+      children: [
+        Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('assets/image/background/analyzeback.jpg'),
+              ),
+            ),
+          ),
+        CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        controller: _scrollController,
+        slivers: <Widget>[
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 100,
+            backgroundColor: Color(0xffffd1dc),
+            flexibleSpace: Container(
+              child: FlexibleSpaceBar(
+                title: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    '나의 감정분석 차트', 
+                    style: soyoMaple700_25
                       ),
                     ),
-                  ),
-              centerTitle: true,
-              titlePadding: EdgeInsetsDirectional.only(
-                start: 16,
-                bottom: 25,
-              ),
-            ),
-          ),
-          bottom: PreferredSize(
-            child: Opacity(
-              opacity: scrollOpacity,
-              child: Container(
-                color: Colors.white,
-                height: 16,
-              ),
-            ),
-            preferredSize: Size.fromHeight(0),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Container(
-            color: Colors.white,
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  '감정 분석 차트',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontFamily: 'SoyoMaple',
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black
-                  ),
+                centerTitle: true,
+                titlePadding: EdgeInsetsDirectional.only(
+                  start: 16,
+                  bottom: 25,
                 ),
-                SizedBox(height: 10,),
-                DrawGraph(),
-                SizedBox(height: 10,),
-                Text(
-                  '(사용자 이름)은 (최다 감정)을 제일 많이 느끼는구나....!',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontFamily: 'SoyoMaple',
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black
-                  ),
-                  textAlign: TextAlign.center,
+              ),
+            ),
+            // bottom: PreferredSize(
+            //   child: Opacity(
+            //     opacity: scrollOpacity,
+            //     child: Container(
+            //       color: Colors.white,
+            //       height: 16,
+            //     ),
+            //   ),
+            //   preferredSize: Size.fromHeight(0),
+            // ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              color: Colors.transparent,
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '감정 분석 차트',
+                    style: soyoMaple700_25
                   ),
                   SizedBox(height: 10,),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-                  TextButton(onPressed: (){
-                    _showCustomDialog(context);
-                  }, 
-                  child: Text(
-                    '눌러봐 이 바보야', 
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.amber.shade900
-                    ),)
-                  ),
-              ],
+                  DrawGraph(),
+                  SizedBox(height: 10,),
+                  Text(
+                    '(사용자 이름)은 (최다 감정)을 제일 많이 느끼는구나....!',
+                    style: soyoMaple400_25,
+                    textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 10,),
+                    TextButton(onPressed: (){
+                      _showCustomDialog(context);
+                    }, 
+                    child: Text(
+                      '눌러봐 이 바보야', 
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.amber.shade900
+                      ),)
+                    ),
+                    TextButton(onPressed: (){
+                      _showCustomDialog(context);
+                    }, 
+                    child: Text(
+                      '눌러봐 이 바보야', 
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.amber.shade900
+                      ),)
+                    ),
+                    TextButton(onPressed: (){
+                      _showCustomDialog(context);
+                    }, 
+                    child: Text(
+                      '눌러봐 이 바보야', 
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.amber.shade900
+                      ),)
+                    ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
+      
+      ]
     );
   }
 }

@@ -7,6 +7,8 @@ import 'package:mindcare/func/star.dart';
 import 'package:mindcare/func/ourVoice.dart';
 import 'package:mindcare/Page/Analyze.dart';
 import 'package:mindcare/Page/UserInput.dart';
+import 'package:mindcare/Style/SoyoMaple.dart';
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -50,19 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Offset> createConstellation1 = [
-    const Offset(50, 50),
-    const Offset(100, 150),
-    const Offset(150, 100),
-    const Offset(200, 180),
-    const Offset(250, 50),
-    const Offset(223, 75),
-    const Offset(153, 57),
-    const Offset(120, 140),
-    const Offset(140, 70),
-    const Offset(69, 75),
-    const Offset(89, 100),
-    const Offset(0, 0),
-    const Offset(400, 400),
   ];
 
   @override
@@ -73,8 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage('assets/image/background/hometutoback.jpg'),
+                fit: BoxFit.fill,
+                image: AssetImage('assets/image/background/homeback.jpg'),
               ),
             ),
           ),
@@ -180,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "여기는 그동안의 내 감정과 (캐릭터 이름)의 편지를 다시 볼 수 있어!",
+                    "여기는 그동안의 내 감정과 의 편지를 다시 볼 수 있어!",
                     style: TextStyle(
                       color: Colors.white, 
                       fontSize: 25,
@@ -270,8 +259,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   loadSavedData() async {
     isCompleteTuto = await storage.getBool('isCompleteTuto') ?? false;
-    userName = await storage.getString('userName') ?? 'Null';
-    userJob = await storage.getString('userJob') ?? 'Null';
+    userName = await storage.getString('userName') ?? '당신';
+    userJob = await storage.getString('userJob') ?? '';
     wantVoice = await storage.getBool('wantVoice') ?? true;
     print('loadSavedData complete');
   }
