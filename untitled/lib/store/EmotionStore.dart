@@ -2,6 +2,65 @@ import 'package:flutter/material.dart';
 
 class EmotionStore extends ChangeNotifier {
   List<bool> pushed_emotion = List<bool>.filled(79, false, growable: true);
+  var pushed = [];
+  // 최대 3개까지 설정하게
+
+  var red = [
+    "격분한",
+    "공황에 빠진",
+    "스트레스",
+    "초조한",
+    "충격받은",
+    "격노한",
+    "몹시 화난",
+    "좌절한",
+    "신경질적인",
+    "망연자실한",
+    "화가 차오르는"
+    "겁먹은",
+    "화가난",
+    "",
+    "안절부절 못하는",
+    "불안한",
+    "우려하는",
+    "근심하는",
+    "짜증나는",
+    "거슬리는",
+    "불쾌한",
+    "골치아픈",
+    "걱정하는",
+    "마음이 불편한"
+    "언짢은"
+  ];
+
+  var yellow = [
+    "놀란",
+    "긍정적인",
+    "즐거운",
+    "매우 신나는",
+    "황홀한",
+    "들뜬",
+    "쾌활한",
+    "동기부여된",
+    "영감을 받은",
+    "의기양양한",
+    "기운 넘치는",
+    "활발한",
+    "흥분한",
+    "낙관적인",
+    "열광하는",
+    "만족하는",
+    "집중하는",
+    "행복한",
+    "자랑스러운",
+    "짜릿한",
+    "유쾌한",
+    "기쁜",
+    "희망적인",
+    "재미있는",
+    "더없이행복한"
+  ];
+
   var kind_of_emotion = [
     "신나는",
     "열정적인",
@@ -85,8 +144,19 @@ class EmotionStore extends ChangeNotifier {
   ];
 
   changeState(i) {
-    pushed_emotion[i] = !pushed_emotion[i];
-    print(pushed_emotion[i]);
-    notifyListeners();
+    if(!pushed_emotion[i] && pushed.length == 3) {
+      print("3개 이상 선택할 수 없습니다.");
+    } else {
+      if(pushed_emotion[i]) {
+        // 풀었을때
+        pushed_emotion[i] = !pushed_emotion[i];
+        pushed.remove(kind_of_emotion[i]);
+      } else {
+        // 눌렀을때
+        pushed_emotion[i] = !pushed_emotion[i];
+        pushed.add(kind_of_emotion[i]);
+      }
+      notifyListeners();
+    }
   }
 }

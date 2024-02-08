@@ -21,7 +21,7 @@ class Cause extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage("assets/background_img.png")
+          image: AssetImage("image/background_img.png")
         )
       ),
       child: Scaffold(
@@ -34,10 +34,6 @@ class Cause extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                child: Text("느낀 감정에 영향을 준 키워드가 있어?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-              ),
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
@@ -48,65 +44,81 @@ class Cause extends StatelessWidget {
                 ),
                 margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
                 padding: EdgeInsets.all(10),
-                width: size.width / 100 * 65,
-                height: size.height / 100 * 28,
+                width: size.width / 100 * 75,
+                height: size.height / 100 * 32,
                 child: Column(
                   children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
+                      child: Text("느낀 감정에 영향을 준 키워드가 있어?", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Colors.black),),
+                    ),
                     Expanded(
                         child: GridView.builder(
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3, //1 개의 행에 보여줄 item 개수
                             childAspectRatio: itemWidth / itemHeight, //item 의 가로 1, 세로 2 의 비율
                             mainAxisSpacing: 5, //수평 Padding
-                            crossAxisSpacing: 5, //수직 Padding
+                            crossAxisSpacing: 10, //수직 Padding
                           ),
                           itemBuilder: (c, i) => TextButton(
                               onPressed: () {
-                                context.read<CauseStore>().changeType(context.read<CauseStore>().cause[i]);
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Today()));
+                                if(i == context.read<CauseStore>().cause.length - 1) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text("직접 입력", style: TextStyle(fontWeight: FontWeight.w700),),
+                                          content: TextField(
+                                            controller: type,
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  context.read<CauseStore>().changeType(type.text == "" ? "이유 없음" : type.text);
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context, MaterialPageRoute(
+                                                      builder: (context) => Today(),
+                                                      settings: RouteSettings(name: "/Today")
+                                                  ));
+                                                },
+                                                child: Text("확인", style: TextStyle(fontWeight: FontWeight.w400),)
+                                            ),
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("취소", style: TextStyle(fontWeight: FontWeight.w400),)
+                                            )
+                                          ],
+                                        );
+                                      }
+                                  );
+                                } else {
+                                  context.read<CauseStore>().changeType(context.read<CauseStore>().cause[i]);
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => Today(),
+                                      settings: RouteSettings(name: "/Today")
+                                  ));
+                                }
                               },
-                              child: Text(context.read<CauseStore>().cause[i])
+                              child: Text(context.read<CauseStore>().cause[i], style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w400),)
+                              // 글자 크기 2배, 글자 검정색
                           ),
                           itemCount: context.read<CauseStore>().cause.length,
                         )
                     ),
-                    Container(
-                      child: TextButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context, 
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("직접 입력"),
-                                    content: TextField(
-                                      controller: type,
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            context.read<CauseStore>().changeType(type.text);
-                                            Navigator.pop(context);
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => Today()));
-                                          }, 
-                                          child: Text("확인")
-                                      ),
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          }, 
-                                          child: Text("취소")
-                                      )
-                                    ],
-                                  );
-                                }
-                            );
-                          },
-                          child: Padding(
-                            child: Text("직접작성"),
-                            padding: EdgeInsets.fromLTRB(itemWidth / 2, 20, itemWidth / 2, 20),
-                          )
-                      ),
-                    )
+                    // Container(
+                    //   child: TextButton(
+                    //       onPressed: () {
+                    //
+                    //       },
+                    //       child: Padding(
+                    //         child: Text("직접 작성", style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w400),),
+                    //         // padding: EdgeInsets.fromLTRB(itemWidth / 2, 20, itemWidth / 2, 20),
+                    //         padding: EdgeInsets.all(10),
+                    //       )
+                    //   ),
+                    // )
                   ],
                 )
               )

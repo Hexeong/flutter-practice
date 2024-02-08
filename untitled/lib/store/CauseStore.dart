@@ -17,7 +17,7 @@ class CauseStore extends ChangeNotifier {
     "건강",
     "취미",
     "생활",
-    "이유없음",
+    "직접작성",
   ];
   changeType(c) {
     typing = c;

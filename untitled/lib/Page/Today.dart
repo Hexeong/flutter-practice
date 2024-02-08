@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:untitled/Page/Result.dart';
-import 'package:untitled/store/CauseStore.dart';
 import 'package:untitled/store/TodayStore.dart';
+
+import 'package:untitled/Page/Loading.dart';
 
 class Today extends StatelessWidget {
   const Today({super.key});
@@ -19,7 +19,7 @@ class Today extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/background_img.png"), fit: BoxFit.cover)
+            image: DecorationImage(image: AssetImage("image/background_img.png"), fit: BoxFit.cover)
         ),
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -29,10 +29,6 @@ class Today extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
-                  child: Text("오늘 어떤 하루를 보냈는지 작성해줘!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),),
-                ),
                 Container(
                   decoration: BoxDecoration(
                       border: Border.all(
@@ -41,29 +37,45 @@ class Today extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                       color: Colors.white
                   ),
-                  width: size.width / 100 * 65,
-                  height: size.height / 100 * 25,
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  width: size.width / 100 * 75,
+                  height: size.height / 100 * 32,
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
                   padding: EdgeInsets.all(5),
-                  child: TextFormField(
-                    controller: type,
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(7, 7, 7, 7),
+                          child: Text("오늘 어떤 하루를 보냈는지 작성해줘!", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Colors.black),),
+                        )
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: TextFormField(
+                          controller: type,
+                          maxLines: null,
+                          keyboardType: TextInputType.multiline,
+                        )
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              context.read<TodayStore>().setTyping(type.text);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Loading()));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              foregroundColor: Colors.white
+                            ),
+                            child: Text("확인", style: TextStyle(fontWeight: FontWeight.w400),)
+                        ),
+                      )
+                    ],
+                  )
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        context.read<TodayStore>().setTyping(type.text);
 
-                        // GPTs Logic
-
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Result()));
-                      },
-                      child: Text("확인")
-                  ),
-                )
               ],
             ),
           ),
