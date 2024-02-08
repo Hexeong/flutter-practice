@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mindcare/widget/graph.dart';
 import 'package:mindcare/Style/SoyoMaple.dart';
 import 'package:mindcare/Page/ViewPreviousLetter.dart';
+import 'package:mindcare/store/EmotionStore.dart';
+import 'package:provider/provider.dart';
 
 // 예제
 class AnalyzePage extends StatefulWidget {
@@ -43,6 +45,18 @@ class _AnalyzePageState extends State<AnalyzePage> {
     super.dispose();
   }
 
+  Map<String, int> getMostFrequentEmotion() {
+    final emotions = Provider.of<EmotionStore>(context, listen: false).json;
+    if (emotions.isEmpty) {
+      return {"None": 0}; // 데이터가 없으면 "None" 반환
+    }
+
+    var sorted = emotions.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    var mostFrequent = sorted.first;
+    return {mostFrequent.key: mostFrequent.value};
+  }
+
   void _showCustomDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -65,6 +79,9 @@ class _AnalyzePageState extends State<AnalyzePage> {
 
   @override
   Widget build(BuildContext context) {
+    var mostFrequentEmotion = getMostFrequentEmotion();
+    String emotionName = mostFrequentEmotion.keys.first;
+
     return Material(
       child: Stack(children: [
         CustomScrollView(
@@ -124,7 +141,7 @@ class _AnalyzePageState extends State<AnalyzePage> {
                       height: 10,
                     ),
                     Text(
-                      '${widget.userName}은(는) 속상한 감정을 \n제일 많이 느끼는구나....!',
+                      '${widget.userName}은(는) $emotionName 감정을 \n제일 많이 느끼는구나....!',
                       style: soyoMaple400_25_black,
                       textAlign: TextAlign.center,
                     ),

@@ -1,23 +1,41 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:provider/provider.dart';
 import 'package:mindcare/Style/SoyoMaple.dart';
-import 'package:mindcare/Page/HomePage.dart'; // MyHomePage 파일의 위치에 따라 경로를 수정해야 할 수도 있습니다.
+import 'package:mindcare/Page/HomePage.dart';
+import 'package:mindcare/Style/mainStyle.dart' as theme;
+import 'store/EmotionStore.dart' as emotion_store;
+import 'store/CauseStore.dart' as cause_store;
+import 'store/TodayStore.dart' as today_store;
+import 'package:mindcare/store/ResultStore.dart' as result_store;
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (c) => emotion_store.EmotionStore()),
+      ChangeNotifierProvider(create: (c) => cause_store.CauseStore()),
+      ChangeNotifierProvider(create: (c) => today_store.TodayStore()),
+      ChangeNotifierProvider(create: (c) => result_store.ResultStore()),
+    ],
+    child: MaterialApp(
+      theme: theme.theme,
+      initialRoute: "/",
+      routes: {
+        '/': (context) =>
+            SplashScreen(), // SplashScreen이 사용자 정의 스플래시 화면을 나타내는 위젯입니다.
+        '/home': (context) => MyHomePage(),
+      },
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: "/",
       // 기본 스플래시를 사용하지 않고자 할 때 home 대신 routes로 지정
       // home: SplashScreen(),
-      routes: {
-        '/': (context) =>
-            SplashScreen(), // SplashScreen이 사용자 정의 스플래시 화면을 나타내는 위젯입니다.
-        '/home': (context) => MyHomePage(),
-      },
     );
   }
 }
@@ -36,7 +54,11 @@ class _SplashScreenState extends State<SplashScreen> {
     // 2초 후에 MyHomePage로 이동
     Timer(
       Duration(seconds: 3),
-      () => Navigator.of(context).pushReplacementNamed('/home'), // '/home'으로 이동
+      () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => MyHomePage(),
+              settings: RouteSettings(name: "/home"))), // '/home'으로 이동
     );
   }
 

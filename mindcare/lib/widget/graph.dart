@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:mindcare/Style/SoyoMaple.dart';
-
-Map emotions = {'속상한': 38, '답답한': 27, '미운': 14, '초조한': 21};
+import 'package:provider/provider.dart';
+import 'package:mindcare/Style/SoyoMaple.dart'; // 가정하는 스타일
+import 'package:mindcare/store/EmotionStore.dart'; // 가정하는 스토어
 
 class DrawGraph extends StatefulWidget {
   const DrawGraph({super.key});
@@ -16,6 +16,9 @@ class _DrawGraphState extends State<DrawGraph> {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, int> emotions =
+        context.read<EmotionStore>().json.cast<String, int>();
+
     return Container(
       height: 400,
       width: 400,
@@ -42,59 +45,49 @@ class _DrawGraphState extends State<DrawGraph> {
             ),
             sectionsSpace: 0,
             centerSpaceRadius: 0,
-            sections: showingSections(),
+            sections: _showingSections(emotions),
           ),
         ),
       ),
     );
   }
 
-  List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
-      final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 40 : 25;
-      final double radius = isTouched ? 200 : 170;
+  List<Color> emotionColors = [
+    Color(0xffc1aae2),
+    Color(0xff9eb4e3),
+    Color(0xfff6c1c1),
+    Color(0xffafe39e),
+    Color(0xff9eafe3),
+    Color(0xffe39eaf),
+    // 기타 색상 추가 가능
+  ];
 
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: Color(0xffc1aae2),
-            value: emotions['속상한'].toDouble(),
-            title: '속상한 \n(${emotions['속상한'].toDouble()}%)',
-            radius: radius,
-            showTitle: true,
-            titleStyle: soyoMaple700_20_black,
-          );
-        case 1:
-          return PieChartSectionData(
-            color: Color(0xff9eb4e3),
-            value: emotions['답답한'].toDouble(),
-            title: '답답한 \n(${emotions['답답한'].toDouble()}%)',
-            showTitle: true,
-            radius: radius,
-            titleStyle: soyoMaple700_20_black,
-          );
-        case 2:
-          return PieChartSectionData(
-            color: Color(0xfff6c1c1),
-            value: emotions['미운'].toDouble(),
-            title: '미운 \n(${emotions['미운'].toDouble()}%)',
-            radius: radius,
-            showTitle: true,
-            titleStyle: soyoMaple700_20_black,
-          );
-        case 3:
-          return PieChartSectionData(
-            color: Color(0xffafe39e),
-            value: emotions['초조한'].toDouble(),
-            title: '초조한 \n(${emotions['초조한'].toDouble()}%)',
-            radius: radius,
-            showTitle: true,
-            titleStyle: soyoMaple700_20_black,
-          );
-        default:
-          throw ('Unknown emotion');
-      }
+  List<PieChartSectionData> _showingSections(Map<String, int> emotions) {
+    int total = emotions.values.fold(0, (sum, item) => sum + item);
+
+    List<PieChartSectionData> sections = [];
+    int colorIndex = 0;
+
+    emotions.forEach((emotion, value) {
+      final isTouched = colorIndex == touchedIndex;
+      final double fontSize = isTouched ? 25 : 20;
+      final double radius = isTouched ? 200 : 170;
+      final double percent = (value.toDouble() / total) * 100;
+
+      PieChartSectionData section = PieChartSectionData(
+        color: emotionColors[colorIndex % emotionColors.length],
+        value: percent,
+        title: '$emotion \n(${percent.toStringAsFixed(0)}%)',
+        radius: radius,
+        titlePositionPercentageOffset: 0.55,
+        showTitle: true,
+        titleStyle: soyoMaple700_20_black, // 가정하는 스타일 속성, 적절히 수정 필요
+      );
+
+      sections.add(section);
+      colorIndex++;
     });
+
+    return sections;
   }
 }

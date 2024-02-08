@@ -1,15 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mindcare/Style/SoyoMaple.dart';
+import 'package:intl/intl.dart';
+import 'dart:convert';
 
-class ViewPreviousLetter extends StatelessWidget {
+class ViewPreviousLetter extends StatefulWidget {
   ViewPreviousLetter({Key? key}) : super(key: key);
 
-  List letters = [
-    '안녕 반가워. 이 편지는 처음이야 처음 편지라서 뭘 써야할지 막막하다안녕 반가워. ',
-    '두번째 편지야. 두번째 편지를 쓰는데 재밌다',
-    '세번째 편지야. 여러분을 만나서 행복해요'
-  ];
-  List days = ['2024-01-31', '2024-02-03', '2024-02-05'];
+  @override
+  State<ViewPreviousLetter> createState() => _ViewPreviousLetterState();
+}
+
+class _ViewPreviousLetterState extends State<ViewPreviousLetter> {
+  List letters = [];
+
+  List days = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await getLetter();
+    });
+  }
+
+  Future<void> getLetter() async {
+    var pref = await SharedPreferences.getInstance();
+    var string = await pref.getString("AllLetter") ?? '';
+    var data = jsonDecode(string);
+    DateFormat format = DateFormat('yyyy-MM-dd');
+    data.keys.forEach((key) {
+      var date = format.parse(key);
+      setState(() {
+        letters.add(data[key]["letter"]);
+        days.add(date);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +50,10 @@ class ViewPreviousLetter extends StatelessWidget {
         itemBuilder: (context, index) {
           return ListTile(
             leading: Icon(Icons.text_snippet_rounded),
-            title: Text(days[index]),
+            title: Text(
+              '${days[index].year}-${days[index].month}-${days[index].day}',
+              style: soyoMaple700_25_black,
+            ),
             onTap: () {
               _showLetterDialog(context, letters[index]);
             },

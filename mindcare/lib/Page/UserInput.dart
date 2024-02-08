@@ -172,7 +172,7 @@ class _UserInputState extends State<UserInput> {
                           textAlign: TextAlign.left,
                         ),
                         SizedBox(
-                          width: 250,
+                          width: 230,
                         ),
                         ElevatedButton(
                             onPressed: () {

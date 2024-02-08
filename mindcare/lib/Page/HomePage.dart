@@ -12,6 +12,7 @@ import 'package:mindcare/Style/SoyoMaple.dart';
 import 'package:mindcare/Page/UserInput.dart';
 import 'package:mindcare/Page/firstInput.dart';
 import 'package:mindcare/Page/splash.dart';
+import '../widget/EmotionModal.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -121,7 +122,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             IconButton(
               key: keyBottomAddDailyNote,
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (BuildContext context) {
+                    return EmotionModal();
+                  },
+                );
+              },
               icon:
                   Icon(Icons.add_circle_outline, size: 90, color: Colors.white),
             ),
