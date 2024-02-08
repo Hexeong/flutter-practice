@@ -1,13 +1,17 @@
 import 'dart:ui';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mindcare/func/star.dart';
-import 'package:mindcare/func/ourVoice.dart';
+import 'package:mindcare/widget/star.dart';
+import 'package:mindcare/widget/ourVoice.dart';
 import 'package:mindcare/Page/Analyze.dart';
 import 'package:mindcare/Page/UserInfo.dart';
 import 'package:mindcare/Style/SoyoMaple.dart';
+import 'package:mindcare/Page/UserInput.dart';
+import 'package:mindcare/Page/firstInput.dart';
+import 'package:mindcare/Page/splash.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -24,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String userJob = '';
   bool wantVoice = true;
   String userBirth = '';
+  late DateTime parsedUserBirth;
   bool needInfoSet = true;
 
   GlobalKey keyBottomAnalytics = GlobalKey();
@@ -40,14 +45,28 @@ class _MyHomePageState extends State<MyHomePage> {
   void init() async {
     await initStorage();
     await loadSavedData();
-    if (isCompleteTuto == false) {
-      createTutorial();
-      Future.delayed(Duration.zero, showTutorial);
+    if (userBirth.isNotEmpty) {
+      DateFormat format = DateFormat('yyyy-MM-dd');
+      parsedUserBirth = format.parse(userBirth);
     } else {
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
-        showOurVoice(context, storage, wantVoice);
-      });
+      parsedUserBirth = DateTime.now(); // userBirth가 비어있으면 현재 날짜를 기본값으로 설정
     }
+    if (userName == '') {
+      final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => firstInput(
+                    userName: userName,
+                    userJob: userJob,
+                    userBirth: parsedUserBirth,
+                  )));
+      await loadSavedData();
+      if (result == 'tutostart') {
+        createTutorial();
+        Future.delayed(Duration.zero, showTutorial);
+      }
+    }
+
     // info 입력
   }
 
@@ -61,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                fit: BoxFit.fill,
+                fit: BoxFit.fitWidth,
                 image: AssetImage('assets/image/background/homeback.jpg'),
               ),
             ),
@@ -95,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) => AnalyzePage(
                               userName: userName,
                             )));
+                loadSavedData();
               },
               icon:
                   Icon(Icons.analytics_outlined, size: 60, color: Colors.white),
@@ -108,10 +128,16 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               key: keyBottomInfo,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => UserInfo()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserInfo(
+                              userName: userName,
+                              userJob: userJob,
+                              userBirth: parsedUserBirth,
+                            )));
               },
-              icon: Icon(Icons.person, size: 60, color: Colors.white),
+              icon: Icon(Icons.settings, size: 60, color: Colors.white),
             ),
           ],
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -167,12 +193,12 @@ class _MyHomePageState extends State<MyHomePage> {
           TargetContent(
             align: ContentAlign.top,
             builder: (context, controller) {
-              return const Column(
+              return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "여기는 그동안의 내 감정과 의 편지를 다시 볼 수 있어!",
+                    "여기는 그동안의 내 감정과 \n${userName}의 편지를 다시 볼 수 있어!",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
@@ -241,6 +267,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontSize: 25,
                         fontFamily: 'SoyoMaple',
                         fontWeight: FontWeight.w400),
+                    textAlign: TextAlign.center,
                   )
                 ],
               );
@@ -259,9 +286,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   loadSavedData() async {
     isCompleteTuto = await storage.getBool('isCompleteTuto') ?? false;
-    userName = await storage.getString('userName') ?? '당신';
+    userName = await storage.getString('userName') ?? '';
     userJob = await storage.getString('userJob') ?? '';
     wantVoice = await storage.getBool('wantVoice') ?? true;
+    userBirth = await storage.getString('userBirth') ?? '';
     print('loadSavedData complete');
   }
 }

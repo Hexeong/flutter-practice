@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mindcare/func/graph.dart';
+import 'package:mindcare/widget/graph.dart';
 import 'package:mindcare/Style/SoyoMaple.dart';
+import 'package:mindcare/Page/ViewPreviousLetter.dart';
 
 // 예제
 class AnalyzePage extends StatefulWidget {
@@ -132,7 +133,10 @@ class _AnalyzePageState extends State<AnalyzePage> {
                     ),
                     TextButton(
                         onPressed: () {
-                          _showCustomDialog(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ViewPreviousLetter()));
                         },
                         child:
                             Text('이전 편지 다시보기', style: soyoMaple700_20_black)),

@@ -4,7 +4,16 @@ import 'package:mindcare/Page/UserInput.dart';
 import 'package:mindcare/Style/SoyoMaple.dart';
 
 class UserInfo extends StatefulWidget {
-  const UserInfo({super.key});
+  final String userName;
+  final String userJob;
+  final DateTime userBirth;
+
+  const UserInfo({
+    Key? key,
+    required this.userName,
+    required this.userJob,
+    required this.userBirth,
+  }) : super(key: key);
 
   @override
   State<UserInfo> createState() => _UserInfoState();
@@ -17,14 +26,20 @@ class _UserInfoState extends State<UserInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('내 정보', style: soyoMaple700_25_black)),
+      appBar: AppBar(title: Text('설정', style: soyoMaple700_25_black)),
       body: Column(
         children: [
           ListTile(
               title: Text('내 정보 보기 / My Info', style: soyoMaple700_25_black),
               leading: Icon(Icons.person, size: 25),
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UserInput()))),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UserInput(
+                            userName: widget.userName,
+                            userJob: widget.userJob,
+                            userBirth: widget.userBirth,
+                          )))),
           ListTile(
             title: Text(
               '피드백 전송',

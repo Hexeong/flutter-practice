@@ -4,11 +4,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:mindcare/func/birthdate_picker.dart';
+import 'package:mindcare/widget/birthdate_picker.dart';
 import 'package:mindcare/Style/SoyoMaple.dart';
 
 class UserInput extends StatefulWidget {
-  UserInput({Key? key}) : super(key: key);
+  final String userName;
+  final String userJob;
+  final DateTime userBirth;
+
+  const UserInput({
+    Key? key,
+    required this.userName,
+    required this.userJob,
+    required this.userBirth,
+  }) : super(key: key);
 
   @override
   State<UserInput> createState() => _UserInputState();
@@ -19,6 +28,17 @@ class _UserInputState extends State<UserInput> {
   late SharedPreferences storage;
 
   String nameInput = '';
+  String userJob = '';
+  DateTime userBirth = DateTime.now();
+  String preview = '';
+  String newBirth = '';
+  String userJob1 = '';
+  DateTime userBirth1 = DateTime.now();
+  String preview1 = '';
+  String newBirth1 = '';
+  bool editName = true;
+  bool editJob = false;
+  bool editBirth = false;
 
   List<String> jobs = [
     '학생',
@@ -50,18 +70,16 @@ class _UserInputState extends State<UserInput> {
   void showMoreJobs() {
     setState(() {
       jobs.addAll(moreJobs);
+      jobs.remove('더보기');
       moreJobs.clear();
     });
   }
 
   @override
   void initState() {
+    super.initState();
     initStorage();
   }
-
-  String userJob = '';
-
-  DateTime userBirth = DateTime.now();
 
   void onDateTimeChanged(dateTime) {
     setState(() {
@@ -72,137 +90,186 @@ class _UserInputState extends State<UserInput> {
   @override
   build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            '내 정보 입력 / 수정',
-            style: soyoMaple700_25_black,
-          ),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          '내 정보 입력 / 수정',
+          style: soyoMaple700_25_black,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Text(
-                        '별명',
-                        style: TextStyle(
-                            fontFamily: 'Soyo',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 25),
-                        textAlign: TextAlign.left,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 10, right: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Text(
+                      '별명',
+                      style: TextStyle(
+                        fontFamily: 'Soyo',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 25,
                       ),
+                      textAlign: TextAlign.left,
                     ),
-                    Container(
-                      height: 40,
-                      child: TextField(
-                        controller: nameController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(
-                              "[a-zA-Z0-9 \u3131-\u314e\u314f-\u3163\uac00-\ud7a3]+"))
-                        ],
-                        decoration: InputDecoration(
-                          hintText: '별명을 여기 입력해주세요!',
-                          labelStyle: soyoMaple400_20,
+                  ),
+                  Container(
+                    height: 40,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: nameController,
+                            readOnly: editName,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(
+                                  "[a-zA-Z0-9 \u3131-\u314e\u314f-\u3163\uac00-\ud7a3]+"))
+                            ],
+                            decoration: InputDecoration(
+                              hintText: widget.userName.isEmpty
+                                  ? '별명을 입력해주세요'
+                                  : '${preview}',
+                              hintStyle: soyoMaple400_20_black,
+                              labelStyle: soyoMaple400_20,
+                            ),
+                          ),
                         ),
-                      ),
+                        ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                editName = false;
+                              });
+                            },
+                            child: Text('수정'))
+                      ],
                     ),
-                    Text('(불리고픈 별명으로 적어주세요!)', style: soyoMaple400_20_black),
-                  ],
-                ),
+                  ),
+                  Text('(불리고픈 별명으로 적어주세요!)', style: soyoMaple400_20_black),
+                ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Text(
-                        '직업',
-                        style: soyoMaple700_25_black,
-                        textAlign: TextAlign.left,
-                      ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: EdgeInsets.only(left: 10, right: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Row(
+                      children: [
+                        Text(
+                          '직업',
+                          style: soyoMaple700_25_black,
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(
+                          width: 250,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                editJob = true;
+                              });
+                            },
+                            child: Text('수정'))
+                      ],
                     ),
-                    Container(
-                      height: 200,
-                      child: CustomScrollView(
-                        slivers: <Widget>[
-                          SliverGrid(
-                              delegate: SliverChildListDelegate(
-                                jobs
-                                    .map((job) => Container(
-                                          width: 10,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(width: 1.0),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                          child: TextButton(
-                                            child: Text(job,
-                                                style: TextStyle(
-                                                    fontFamily: 'Soyo',
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 15,
-                                                    color: Colors.black)),
-                                            onPressed: () {
+                  ),
+                  Container(
+                    height: 210,
+                    decoration: BoxDecoration(border: Border.all(width: 1)),
+                    child: CustomScrollView(
+                      slivers: <Widget>[
+                        SliverGrid(
+                            delegate: SliverChildListDelegate(
+                              jobs
+                                  .map((job) => Container(
+                                        width: 10,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                            color: userJob ==
+                                                    job // 여기서 매칭되는지 확인
+                                                ? Colors.blue.shade100
+                                                : Colors.white, // 매칭이 맞다면 색상 변경
+                                            border: Border.all(width: 1.0),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        child: TextButton(
+                                          child: Text(job,
+                                              style: TextStyle(
+                                                  fontFamily: 'Soyo',
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 15,
+                                                  color: Colors.black)),
+                                          onPressed: () {
+                                            if (editJob == true) {
                                               if (job == '더보기') {
-                                                setState(() {
-                                                  if (moreJobs.isNotEmpty) {
-                                                    jobs.removeLast();
-                                                    jobs.addAll(moreJobs);
-                                                    moreJobs.clear();
-                                                  }
-                                                });
+                                                showMoreJobs();
                                               } else {
                                                 setState(() {
-                                                  userJob = job;
+                                                  userJob =
+                                                      job; // 사용자가 선택한 직업 업데이트
                                                   print('$userJob');
                                                 });
                                               }
-                                            },
-                                          ),
-                                        ))
-                                    .toList(),
-                              ),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      mainAxisSpacing: 5, // 수평 패딩
-                                      crossAxisSpacing: 5, //수직 패딩
-                                      childAspectRatio: 2.5))
-                        ],
-                      ),
+                                            }
+                                          },
+                                        ),
+                                      ))
+                                  .toList(),
+                            ),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    mainAxisSpacing: 5, // 수평 패딩
+                                    crossAxisSpacing: 5, //수직 패딩
+                                    childAspectRatio: 2.5)),
+                      ],
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '생년월일',
-                            style: soyoMaple700_25_black,
-                            textAlign: TextAlign.left,
-                          ),
-                          Center(
-                            child: TextButton(
-                                child: Text(
-                                  '${userBirth.year}.${userBirth.month}.${userBirth.day}',
-                                  style: TextStyle(fontSize: 48),
-                                ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              '생년월일',
+                              style: soyoMaple700_25_black,
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              width: 200,
+                            ),
+                            ElevatedButton(
                                 onPressed: () {
+                                  setState(() {
+                                    editBirth = true;
+                                  });
+                                },
+                                child: Text('수정'))
+                          ],
+                        ),
+                        Center(
+                          child: TextButton(
+                              child: Text(
+                                '${userBirth.year}.${userBirth.month}.${userBirth.day}',
+                                style: TextStyle(fontSize: 48),
+                              ),
+                              onPressed: () {
+                                if (editBirth == true) {
                                   showCupertinoDialog(
                                       context: context,
                                       barrierDismissible: true,
@@ -220,33 +287,37 @@ class _UserInputState extends State<UserInput> {
                                               )),
                                         );
                                       });
-                                }),
-                          )
-                        ],
-                      ),
+                                }
+                              }),
+                        )
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        bottomNavigationBar: BottomAppBar(
-          child: TextButton(
-            onPressed: () {
-              saveData();
-              print(
-                  '저장완료 - userName: ${nameController.text}, userJob: $userJob, userBirth: ${userBirth.year.toString()}-${userBirth.month.toString()}-${userBirth.weekday.toString()}');
-              Navigator.pop(context);
-            },
-            child: Text('확인'),
-          ),
-        ));
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: TextButton(
+          onPressed: () {
+            saveData();
+            print(
+                '저장완료 - userName: ${nameController.text}, userJob: $userJob, userBirth: ${userBirth.year.toString()}-${userBirth.month.toString()}-${userBirth.weekday.toString()}');
+            Navigator.pop(context, 'tutostart');
+          },
+          child: Text('저장'),
+        ),
+      ),
+    );
   }
 
   initStorage() async {
     storage = await SharedPreferences.getInstance();
-    print('initStorage complete');
+    print('initStorage complete-userinput');
+    loadSavedData();
+    print('savedData-loaded');
   }
 
   saveData() async {
@@ -254,5 +325,20 @@ class _UserInputState extends State<UserInput> {
     storage.setString('userJob', userJob);
     storage.setString('userBirth',
         '${userBirth.year.toString()}-${userBirth.month.toString()}-${userBirth.day.toString()}');
+    loadSavedData();
+  }
+
+  loadSavedData() async {
+    preview1 = await storage.getString('userName') ?? '';
+    userJob1 = await storage.getString('userJob') ?? '';
+    newBirth1 = await storage.getString('userBirth') ?? '';
+    DateFormat format = DateFormat('yyyy-MM-dd');
+    userBirth1 = format.parse(newBirth1);
+    setState(() {
+      preview = preview1;
+      userJob = userJob1;
+      userBirth = userBirth1;
+    });
+    print('loadSavedData complete');
   }
 }
